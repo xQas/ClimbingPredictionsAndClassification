@@ -1,8 +1,8 @@
 # standardowe biblioteki
 import pandas as pd
+import pickle
 
 # biblioteki zewnętrzne
-import joblib
 import streamlit as st
 
 
@@ -15,7 +15,9 @@ def load_data():
 def load_model(path, name):
     """Wczytuje model z pliku .pkl z pomocą joblib"""
     try:
-        return joblib.load(path)
+        with open(path, 'rb') as f:
+            model = pickle.load(f)
+        return model
     except FileNotFoundError:
         st.error(f"Nie znaleziono modelu: {name} (ścieżka: {path})")
         return None
